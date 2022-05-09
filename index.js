@@ -30,6 +30,11 @@ const resultsWrapper = document.querySelector('.results')
 const onInput = debounce(async (event) => {
 
  const movies = await fetchData(event.target.value)
+if(!movies.length) {
+  return dropdown.classList.remove('is-active');
+
+}
+
 
  resultsWrapper.innerHTML = ''
  dropdown.classList.add('is-active');
@@ -42,6 +47,17 @@ const onInput = debounce(async (event) => {
        ${movie.Title}
      `;
   
+     option.addEventListener('click', () => {
+       dropdown.classList.remove('is-active')
+       input.value = movie.Title
+       selectedMovie(movie);
+       
+       //make another request
+       //get the data
+       //render the data
+
+     })
+
      resultsWrapper.appendChild(option);
  }
 })
@@ -52,3 +68,13 @@ document.addEventListener('click', event => {
     dropdown.classList.remove('is-active')
   }
 })
+
+const selectedMovie = async movie => {
+     const response = await axios.get('http://www.omdbapi.com/', {
+      params: {
+          apikey: '515dcbba',
+          i: movie.imdbID
+      }
+  });
+  console.log(response.data)
+}
