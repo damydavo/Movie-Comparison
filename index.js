@@ -20,6 +20,12 @@ createAutoComplete( {
     <img src="${movie.Poster === 'N/A' ? '' : movie.Poster}" />
     ${movie.Title}
     `
+  },
+  onOptionSelect(movie) {
+     selectedMovie(movie)
+  },
+  inputValue(movie) {
+     return movie.Title
   }
 })
 
